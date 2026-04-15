@@ -1,0 +1,51 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="/logo.png" alt="IT-CONCEPT" class="logo-img" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">{t('nav.services')}</a></li>
+    <li><a href="#process">{t('nav.process')}</a></li>
+    <li><a href="#packages">{t('nav.delivery')}</a></li>
+    <li><a href="#faq">{t('nav.faq')}</a></li>
+    <li><a href="#team">{t('nav.team')}</a></li>
+    <li><a href="#company">{t('nav.company')}</a></li>
+    <li><a href="#contact">{t('nav.contact')}</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="https://calendly.com/it-concept-ai" target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      {t('nav.booking')}
+    </a>
+    <div class="lang-switcher">
+      <a href="/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+      <a href="/fr/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+      <a href="/ko/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services" onclick="toggleMobileNav()">{t('nav.services')}</a>
+  <a href="#process" onclick="toggleMobileNav()">{t('nav.process')}</a>
+  <a href="#packages" onclick="toggleMobileNav()">{t('nav.delivery')}</a>
+  <a href="#faq" onclick="toggleMobileNav()">{t('nav.faq')}</a>
+  <a href="#team" onclick="toggleMobileNav()">{t('nav.team')}</a>
+  <a href="#company" onclick="toggleMobileNav()">{t('nav.company')}</a>
+  <a href="#contact" onclick="toggleMobileNav()">{t('nav.contact')}</a>
+  <div class="mobile-lang">
+    <a href="/" class:list={['lang-btn', { active: lang === 'en' }]}>EN</a>
+    <a href="/fr/" class:list={['lang-btn', { active: lang === 'fr' }]}>FR</a>
+    <a href="/ko/" class:list={['lang-btn', { active: lang === 'ko' }]}>KO</a>
+  </div>
+</div>

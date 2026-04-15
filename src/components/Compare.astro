@@ -1,0 +1,60 @@
+---
+import { useTranslations } from '../i18n/utils';
+export interface Props { lang: 'en' | 'fr' | 'ko'; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+<section id="compare" style="background:var(--grey)">
+  <span class="section-label reveal">{t('cmp.label')}</span>
+  <h2 class="section-title reveal">{t('cmp.title')}</h2>
+  <p class="section-desc reveal">{t('cmp.desc')}</p>
+  <div class="reveal" style="overflow-x:auto;margin-top:40px">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>{t('cmp.service')}</th>
+          <th>{t('pkg1.title')}</th>
+          <th>{t('pkg2.title')}</th>
+          <th>{t('pkg3.title')}</th>
+          <th>{t('pkg4.title')}</th>
+          <th>{t('pkg5.title')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{t('svc1.title')}</td>
+          <td class="cmp-full">●</td>
+          <td class="cmp-half">◐</td>
+          <td class="cmp-half">◐</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+        </tr>
+        <tr>
+          <td>{t('svc2.title')}</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-half">◐</td>
+          <td class="cmp-full">●</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+        </tr>
+        <tr>
+          <td>{t('svc3.title')}</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+          <td class="cmp-full">●</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+        </tr>
+        <tr>
+          <td>{t('svc4.title')}</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+          <td class="cmp-half">◐</td>
+          <td class="cmp-none">–</td>
+          <td class="cmp-full">●</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-muted)" set:html={t('cmp.legend')} />
+  </div>
+</section>
