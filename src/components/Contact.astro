@@ -35,26 +35,65 @@ const t = useTranslations(lang);
         {t('contact.booking')}
       </a>
     </div>
-    <div class="contact-form reveal">
+    <form class="contact-form reveal" id="contact-form">
+      <input type="hidden" name="_replyto" id="form-replyto" />
       <div class="form-row">
         <div class="form-group">
           <label>{t('form.name')}</label>
-          <input type="text" placeholder={t('form.name.ph')} />
+          <input type="text" name="name" placeholder={t('form.name.ph')} required />
         </div>
         <div class="form-group">
           <label>{t('form.email')}</label>
-          <input type="email" placeholder={t('form.email.ph')} />
+          <input type="email" name="email" id="form-email-input" placeholder={t('form.email.ph')} required />
         </div>
       </div>
       <div class="form-group">
         <label>{t('form.company')}</label>
-        <input type="text" placeholder={t('form.company.ph')} />
+        <input type="text" name="company" placeholder={t('form.company.ph')} />
       </div>
       <div class="form-group">
         <label>{t('form.message')}</label>
-        <textarea placeholder={t('form.message.ph')}></textarea>
+        <textarea name="message" placeholder={t('form.message.ph')} required></textarea>
       </div>
-      <button class="form-submit">{t('form.submit')}</button>
-    </div>
+      <button class="form-submit" type="submit" id="form-btn">{t('form.submit')}</button>
+      <div id="form-success" style="display:none;margin-top:16px;color:#4ade80;font-weight:600">
+        {lang === 'fr' ? '✓ Message envoyé ! Nous vous répondrons sous 24h.' : lang === 'ko' ? '✓ 메시지가 전송되었습니다! 24시간 내에 답변드리겠습니다.' : '✓ Message sent! We\'ll get back to you within 24h.'}
+      </div>
+      <div id="form-error" style="display:none;margin-top:16px;color:#f87171;font-weight:600">
+        {lang === 'fr' ? '✗ Erreur lors de l\'envoi. Réessayez ou écrivez à ai@it-concept.kr' : lang === 'ko' ? '✗ 전송 오류. 다시 시도하거나 ai@it-concept.kr로 이메일 보내주세요.' : '✗ Error sending. Please retry or email ai@it-concept.kr'}
+      </div>
+    </form>
+
+    <script>
+      const form = document.getElementById('contact-form') as HTMLFormElement;
+      const emailInput = document.getElementById('form-email-input') as HTMLInputElement;
+      const replyto = document.getElementById('form-replyto') as HTMLInputElement;
+      emailInput?.addEventListener('input', () => { replyto.value = emailInput.value; });
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('form-btn') as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+          const res = await fetch('https://formspree.io/louis.mathis@it-concept.kr', {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
+          });
+          if (res.ok) {
+            form.reset();
+            btn.style.display = 'none';
+            (document.getElementById('form-success') as HTMLElement).style.display = 'block';
+          } else {
+            throw new Error();
+          }
+        } catch {
+          btn.disabled = false;
+          btn.textContent = btn.textContent === '...' ? 'Réessayer' : btn.textContent;
+          (document.getElementById('form-error') as HTMLElement).style.display = 'block';
+        }
+      });
+    </script>
   </div>
 </section>
