@@ -4,20 +4,14 @@ export interface Props { lang: 'en' | 'fr' | 'ko'; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Columns = 4 service offerings
-// Rows = capabilities
-// ● full  ◐ partial  – none
-const matrix = [
-  // [Audit, Strategy, Dev, Workshop]
-  ['●', '◐', '–', '–'],  // Assessment & Diagnosis
-  ['●', '●', '–', '–'],  // Strategic Roadmap
-  ['–', '◐', '●', '–'],  // Custom AI Development
-  ['–', '–', '◐', '●'],  // Team Training
-  ['–', '–', '●', '–'],  // Ongoing Maintenance
-  ['◐', '●', '–', '–'],  // AI Governance
+const profileRows = [
+  { key: 'bestfor', icon: '🎯' },
+  { key: 'stage',   icon: '📍' },
+  { key: 'engagement', icon: '⏱' },
+  { key: 'audience', icon: '👥' },
 ];
 ---
-<section id="compare" style="background:var(--grey)">
+<section id="compare">
   <span class="section-label reveal">{t('cmp.label')}</span>
   <h2 class="section-title reveal">{t('cmp.title')}</h2>
   <p class="section-desc reveal">{t('cmp.desc')}</p>
@@ -25,24 +19,73 @@ const matrix = [
     <table class="cmp-table">
       <thead>
         <tr>
-          <th>{t('cmp.service')}</th>
-          <th>{t('svc1.title')}</th>
-          <th>{t('svc2.title')}</th>
-          <th>{t('svc3.title')}</th>
-          <th>{t('svc4.title')}</th>
+          <th></th>
+          <th>
+            <span class="cmp-svc-num">1</span>
+            {t('svc1.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">2</span>
+            {t('svc2.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">3</span>
+            {t('svc3.title')}
+          </th>
+          <th>
+            <span class="cmp-svc-num">4</span>
+            {t('svc4.title')}
+          </th>
         </tr>
       </thead>
       <tbody>
-        {matrix.map((row, i) => (
-          <tr>
-            <td>{t(`cmp.row${i + 1}`)}</td>
-            {row.map(cell => (
-              <td class={cell === '●' ? 'cmp-full' : cell === '◐' ? 'cmp-half' : 'cmp-none'}>{cell}</td>
-            ))}
+        {profileRows.map(({ key, icon }) => (
+          <tr class="cmp-profile-row">
+            <td><div class="cmp-row-label"><span class="cmp-row-icon">{icon}</span>{t(`cmp.${key}`)}</div></td>
+            <td>{t(`cmp.svc1.${key}`)}</td>
+            <td>{t(`cmp.svc2.${key}`)}</td>
+            <td>{t(`cmp.svc3.${key}`)}</td>
+            <td>{t(`cmp.svc4.${key}`)}</td>
           </tr>
         ))}
       </tbody>
     </table>
-    <p class="reveal" style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-muted)" set:html={t('cmp.legend')} />
   </div>
 </section>
+
+<style>
+.cmp-svc-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.cmp-profile-row td {
+  font-size: 0.85rem;
+  color: var(--text);
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.cmp-row-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cmp-row-icon {
+  font-style: normal;
+  flex-shrink: 0;
+}
+</style>

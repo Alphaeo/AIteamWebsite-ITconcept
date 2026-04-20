@@ -696,7 +696,9 @@ section { padding: 100px 5%; }
 
 /* ─── TEAM ─── */
 #team {
-  background: var(--dark2);
+  background:
+    linear-gradient(rgba(13,17,23,0.88), rgba(13,17,23,0.88)),
+    url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   color: var(--white);
 }
 #team .section-title { color: var(--white); }
@@ -905,6 +907,13 @@ section { padding: 100px 5%; }
 .form-submit:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(229,57,53,0.35); }
 
 /* ─── COMPARISON TABLE ─── */
+#compare {
+  background: var(--dark);
+}
+#compare .section-title { color: var(--white); }
+#compare .section-desc { color: rgba(255,255,255,0.55); }
+#compare .section-label { color: var(--red-light, var(--red)); }
+
 .cmp-table {
   width: 100%;
   border-collapse: collapse;
